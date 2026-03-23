@@ -36,7 +36,6 @@
       overflow-x: hidden;
     }
 
-    /* Animated Stars Background */
     .stars-container {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -57,24 +56,40 @@
       box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
     }
 
-    /* Iconic Star Eyes */
-    .star-eye {
-      position: absolute;
-      top: 30px;
-      right: 40px;
-      font-size: 2.5rem;
-      color: var(--ai-gold);
-      filter: drop-shadow(0 0 10px var(--ai-gold));
-      animation: pulse 3s infinite;
-    }
-
     header h1 {
       font-size: 3.5rem;
       font-weight: 800;
-      background: linear-gradient(to right, #fff, var(--ai-pink), var(--ai-purple));
+      display: inline-block;
+      cursor: default;
+      background: linear-gradient(90deg, #fff, var(--ai-pink), var(--ai-purple), #fff);
+      background-size: 200% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 10px;
+      transition: all 0.5s ease;
+      position: relative;
+    }
+
+    header h1::after {
+      content: "★";
+      position: absolute;
+      right: -45px;
+      top: 10px;
+      font-size: 2.5rem;
+      color: var(--ai-gold);
+      opacity: 0;
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      filter: drop-shadow(0 0 15px var(--ai-gold));
+    }
+
+    header h1:hover {
+      background-position: right center;
+      transform: scale(1.02);
+    }
+
+    header h1:hover::after {
+      opacity: 1;
+      right: -55px;
+      transform: rotate(360deg) scale(1.2);
     }
 
     h2 {
@@ -86,6 +101,7 @@
       display: flex;
       align-items: center;
       gap: 15px;
+      margin-top: 20px;
     }
 
     h2::after {
@@ -102,7 +118,6 @@
       line-height: 1.7;
     }
 
-    /* Quote Cycler Styling */
     .quote-container {
       margin: 40px 0;
       padding: 30px;
@@ -132,7 +147,6 @@
 
     .fade-out { opacity: 0; }
 
-    /* Tech Grid */
     .icons-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(55px, 1fr));
@@ -159,14 +173,11 @@
 
     .icon-link img { width: 30px; height: 30px; }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 0.6; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.1); }
-    }
-
     @media (max-width: 600px) {
       .container { padding: 30px; }
       header h1 { font-size: 2.5rem; }
+      header h1::after { font-size: 1.8rem; right: -30px; }
+      header h1:hover::after { right: -35px; }
     }
   </style>
 </head>
@@ -175,8 +186,6 @@
 <div class="stars-container" id="stars"></div>
 
 <main class="container">
-  <div class="star-eye">★</div>
-  
   <header>
     <h1>Aqua Tsukimura</h1>
   </header>
@@ -241,7 +250,7 @@
   setInterval(updateQuote, 5000);
 
   const starsContainer = document.getElementById('stars');
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 60; i++) {
     const star = document.createElement('div');
     star.style.position = 'absolute';
     star.style.left = `${Math.random() * 100}%`;
@@ -251,6 +260,7 @@
     star.style.background = 'white';
     star.style.opacity = Math.random();
     star.style.borderRadius = '50%';
+    star.style.boxShadow = `0 0 ${Math.random() * 5}px white`;
     starsContainer.appendChild(star);
   }
 </script>
