@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Aqua Tsukimura | Developer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet" />
+  <title>Aqua Tsukimura | Eternal Star</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg-dark: #0f172a;
-      --glass-bg: rgba(30, 41, 59, 0.7);
-      --accent: #38bdf8; /* Soft blue accent */
-      --text-main: #f8fafc;
-      --text-dim: #94a3b8;
+      --ai-pink: #ff007a;
+      --ai-purple: #7000ff;
+      --ai-gold: #ffcc00;
+      --bg-deep: #06040d;
+      --glass: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 0, 122, 0.2);
     }
 
     * {
@@ -21,149 +22,238 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-dark);
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg-deep);
       background-image: 
-        radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(56, 189, 248, 0.1) 0px, transparent 50%);
-      color: var(--text-main);
+        radial-gradient(circle at 10% 20%, rgba(112, 0, 255, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(255, 0, 122, 0.15) 0%, transparent 40%);
+      color: #fff;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
       padding: 20px;
+      overflow-x: hidden;
+    }
+
+    /* Animated Stars Background */
+    .stars-container {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1;
+      pointer-events: none;
     }
 
     .container {
-      max-width: 800px;
+      max-width: 850px;
       width: 100%;
-      background: var(--glass-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      padding: 60px;
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      background: var(--glass);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border-radius: 40px;
+      border: 1px solid var(--glass-border);
+      padding: 50px;
+      position: relative;
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
     }
 
-    header {
-      margin-bottom: 40px;
+    /* Iconic Star Eyes */
+    .star-eye {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      font-size: 2.5rem;
+      color: var(--ai-gold);
+      filter: drop-shadow(0 0 10px var(--ai-gold));
+      animation: pulse 3s infinite;
     }
 
     header h1 {
       font-size: 3.5rem;
       font-weight: 800;
-      letter-spacing: -0.02em;
-      background: linear-gradient(to right, #fff, var(--accent));
+      background: linear-gradient(to right, #fff, var(--ai-pink), var(--ai-purple));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-    }
-
-    section {
-      margin-bottom: 50px;
+      margin-bottom: 10px;
     }
 
     h2 {
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: var(--accent);
+      letter-spacing: 4px;
+      color: var(--ai-pink);
       margin-bottom: 20px;
-    }
-
-    .about p {
-      font-size: 1.25rem;
-      color: var(--text-dim);
-      font-weight: 400;
-      line-height: 1.8;
-    }
-
-    .about p strong {
-      color: var(--text-main);
-      font-weight: 600;
-    }
-
-    h3 {
-      font-size: 1.5rem;
-      margin-bottom: 25px;
-      font-weight: 600;
-    }
-
-    .icons-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+      display: flex;
+      align-items: center;
       gap: 15px;
     }
 
+    h2::after {
+      content: "";
+      height: 1px;
+      flex-grow: 1;
+      background: linear-gradient(90deg, var(--ai-pink), transparent);
+    }
+
+    .about p {
+      font-size: 1.2rem;
+      color: #ccc;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* Quote Cycler Styling */
+    .quote-container {
+      margin: 40px 0;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 20px;
+      border-left: 3px solid var(--ai-pink);
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    #quote-text {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: #eee;
+      transition: opacity 0.5s ease;
+    }
+
+    #quote-author {
+      font-size: 0.8rem;
+      color: var(--ai-purple);
+      margin-top: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .fade-out { opacity: 0; }
+
+    /* Tech Grid */
+    .icons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(55px, 1fr));
+      gap: 12px;
+    }
+
     .icon-link {
-      aspect-ratio: 1/1;
+      aspect-ratio: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       display: flex;
       justify-content: center;
       align-items: center;
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .icon-link:hover {
-      background: rgba(56, 189, 248, 0.1);
-      border-color: var(--accent);
-      transform: translateY(-5px);
+      transform: translateY(-5px) scale(1.1);
+      border-color: var(--ai-pink);
+      background: rgba(255, 0, 122, 0.1);
+      box-shadow: 0 0 15px rgba(255, 0, 122, 0.3);
     }
 
-    .icon-link img {
-      width: 28px;
-      height: 28px;
-      filter: grayscale(0.2);
-      transition: filter 0.3s;
-    }
+    .icon-link img { width: 30px; height: 30px; }
 
-    .icon-link:hover img {
-      filter: grayscale(0);
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.1); }
     }
 
     @media (max-width: 600px) {
       .container { padding: 30px; }
       header h1 { font-size: 2.5rem; }
-      .icons-grid { grid-template-columns: repeat(4, 1fr); }
     }
   </style>
 </head>
 <body>
 
+<div class="stars-container" id="stars"></div>
+
 <main class="container">
+  <div class="star-eye">★</div>
+  
   <header>
     <h1>Aqua Tsukimura</h1>
   </header>
 
   <section class="about">
-    <h2>Profile</h2>
+    <h2>The Profile</h2>
     <p>
-      I am a <strong>Full-Stack Developer</strong> and anime enthusiast. <br>
-      At 14, I'm focused on building scalable systems and exploring modern cloud architectures.
+      At 14, I balance the world of <strong>Full-Stack Development</strong> with an unyielding love for anime. 
+      I create digital experiences that shine with the intensity of an idol under the spotlight.
     </p>
+
+    <div class="quote-container">
+      <p id="quote-text">"Lies are a refined form of love."</p>
+      <p id="quote-author">— Ai Hoshino</p>
+    </div>
   </section>
 
-  <section class="languages-tools">
-    <h3>Tech Stack</h3>
+  <section class="tech">
+    <h2>Tech Repertoire</h2>
     <div class="icons-grid">
-      <a class="icon-link" href="#" aria-label="Azure"><img src="https://skillicons.dev/icons?i=azure" alt="Azure" /></a>
-      <a class="icon-link" href="#" aria-label="C"><img src="https://skillicons.dev/icons?i=c" alt="C" /></a>
-      <a class="icon-link" href="#" aria-label="C#"><img src="https://skillicons.dev/icons?i=cs" alt="C#" /></a>
-      <a class="icon-link" href="#" aria-label="C++"><img src="https://skillicons.dev/icons?i=cpp" alt="C++" /></a>
-      <a class="icon-link" href="#" aria-label="Cloudflare"><img src="https://skillicons.dev/icons?i=cloudflare" alt="Cloudflare" /></a>
-      <a class="icon-link" href="#" aria-label="Kafka"><img src="https://skillicons.dev/icons?i=kafka" alt="Kafka" /></a>
-      <a class="icon-link" href="#" aria-label="Kotlin"><img src="https://skillicons.dev/icons?i=kotlin" alt="Kotlin" /></a>
-      <a class="icon-link" href="#" aria-label="Kubernetes"><img src="https://skillicons.dev/icons?i=kubernetes" alt="Kubernetes" /></a>
-      <a class="icon-link" href="#" aria-label="Lua"><img src="https://skillicons.dev/icons?i=lua" alt="Lua" /></a>
-      <a class="icon-link" href="#" aria-label="Python"><img src="https://skillicons.dev/icons?i=py" alt="Python" /></a>
-      <a class="icon-link" href="#" aria-label="Redis"><img src="https://skillicons.dev/icons?i=redis" alt="Redis" /></a>
-      <a class="icon-link" href="#" aria-label="TypeScript"><img src="https://skillicons.dev/icons?i=ts" alt="TypeScript" /></a>
-      <a class="icon-link" href="#" aria-label="VSCode"><img src="https://skillicons.dev/icons?i=vscode" alt="VSCode" /></a>
+      <a class="icon-link" href="#"><img src="https://skillicons.dev/icons?i=azure" alt="Azure" /></a>
+      <a class="icon-link" href="#"><img src="https://skillicons.dev/icons?i=c" alt="C" /></a>
+      <a class="icon-link" href="#"><img src="https://skillicons.dev/icons?i=cs" alt="C#" /></a>
+      <a class="icon-link" href="#"><img src="https://skillicons.dev/icons?i=cpp" alt="C++" /></a>
+      <a class="icon-link" href="#"><img src="https://skillicons.dev/icons?i=cloudflare" alt="Cloudflare" /></a>
+      <a class="icon-link" href="#"><img src="https://skillicons.dev/icons?i=kafka" alt="Kafka" /></a>
+      <a class="icon-link" href="#"><img src="https://skillicons.dev/icons?i=kotlin" alt="Kotlin" /></a>
+      <a class="icon-link" href="#"><img src="https://skillicons.dev/icons?i=kubernetes" alt="Kubernetes" /></a>
+      <a class="icon-link" href="#"><img src="https://skillicons.dev/icons?i=lua" alt="Lua" /></a>
+      <a class="icon-link" href="#"><img src="https://skillicons.dev/icons?i=py" alt="Python" /></a>
+      <a class="icon-link" href="#"><img src="https://skillicons.dev/icons?i=redis" alt="Redis" /></a>
+      <a class="icon-link" href="#"><img src="https://skillicons.dev/icons?i=ts" alt="TypeScript" /></a>
+      <a class="icon-link" href="#"><img src="https://skillicons.dev/icons?i=vscode" alt="VSCode" /></a>
     </div>
   </section>
 </main>
+
+<script>
+  const quotes = [
+    { text: "Lies are a refined form of love.", author: "Ai Hoshino" },
+    { text: "I want to love someone for real.", author: "Ai Hoshino" },
+    { text: "Lying is the best way to protect yourself.", author: "Ai Hoshino" },
+    { text: "Even if it's a lie, I want to be someone who can say 'I love you'.", author: "Ai Hoshino" },
+    { text: "A star is someone who shines the brightest in the dark.", author: "B-Komachi" }
+  ];
+
+  let currentQuote = 0;
+  const quoteEl = document.getElementById('quote-text');
+  const authorEl = document.getElementById('quote-author');
+
+  function updateQuote() {
+    quoteEl.classList.add('fade-out');
+    
+    setTimeout(() => {
+      currentQuote = (currentQuote + 1) % quotes.length;
+      quoteEl.textContent = `"${quotes[currentQuote].text}"`;
+      authorEl.textContent = `— ${quotes[currentQuote].author}`;
+      quoteEl.classList.remove('fade-out');
+    }, 500);
+  }
+
+  setInterval(updateQuote, 5000);
+
+  const starsContainer = document.getElementById('stars');
+  for (let i = 0; i < 50; i++) {
+    const star = document.createElement('div');
+    star.style.position = 'absolute';
+    star.style.left = `${Math.random() * 100}%`;
+    star.style.top = `${Math.random() * 100}%`;
+    star.style.width = '2px';
+    star.style.height = '2px';
+    star.style.background = 'white';
+    star.style.opacity = Math.random();
+    star.style.borderRadius = '50%';
+    starsContainer.appendChild(star);
+  }
+</script>
 
 </body>
 </html>
