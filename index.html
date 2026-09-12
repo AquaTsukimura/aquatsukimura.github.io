@@ -1,780 +1,1507 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aqua Tsukimura | Full-Stack Developer</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aqua Tsukimura — Developer & Creator</title>
+  
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --bg-deep: #070913;
-      --bg-alt: #0d1120;
-      --navy: #151b2e;
-      --cyan: #89c4f4;
-      --lavender: #9b88ed;
-      --pink: #f4b5cd;
-      --cream: #fdfbf7;
-      --charcoal: #1c1f2e;
-      --red-accent: #8b2b3a;
+      /* Palette: KimiShinu Inspired Atmosphere */
+      --bg-deep: #050711;
+      --bg-surface: #0a0e21;
+      --bg-card: rgba(15, 21, 46, 0.65);
+      --bg-card-hover: rgba(23, 31, 66, 0.75);
       
-      --glass: rgba(253, 251, 247, 0.03);
-      --glass-border: rgba(155, 136, 237, 0.15);
-      
-      --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      --cyan-moon: #70e2ff;
+      --cyan-soft: #a5f3fc;
+      --navy-dark: #090d20;
+      --lavender-muted: #c084fc;
+      --pink-soft: #f472b6;
+      --cream-paper: #f8fafc;
+      --charcoal: #1e293b;
+      --crimson-accent: #f43f5e;
+      --gold-star: #fbbf24;
+
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+
+      --border-glass: rgba(112, 226, 255, 0.15);
+      --border-glow: rgba(112, 226, 255, 0.4);
+
+      --font-heading: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Outfit', sans-serif;
+      --font-code: 'JetBrains Mono', monospace;
+
+      --transition-fast: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* Reset & Base */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      color-scheme: dark;
+    }
 
     body {
-      font-family: 'Outfit', sans-serif;
+      font-family: var(--font-body);
       background-color: var(--bg-deep);
-      color: var(--cream);
+      color: var(--text-main);
       line-height: 1.6;
       overflow-x: hidden;
       position: relative;
     }
 
-    /* Ambient Background */
-    #ambient-canvas {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      z-index: -2;
-      background: radial-gradient(circle at 50% 0%, var(--navy) 0%, var(--bg-deep) 70%);
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
     }
 
-    .particles {
+    /* Canvas Backgrounds */
+    #canvas-starfield {
       position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      z-index: -1;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -2;
       pointer-events: none;
     }
 
-    h1, h2, h3, h4 {
-      font-family: 'Playfair Display', serif;
-      font-weight: 400;
-    }
-
-    a { text-decoration: none; color: inherit; }
-
-    /* Navigation */
-    nav {
+    .moonlight-glow {
       position: fixed;
-      top: 0; left: 0; width: 100%;
-      padding: 20px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 100;
-      background: linear-gradient(to bottom, rgba(7, 9, 19, 0.9), transparent);
-      backdrop-filter: blur(5px);
+      top: -10vw;
+      right: -10vw;
+      width: 50vw;
+      height: 50vw;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(112, 226, 255, 0.08) 0%, rgba(192, 132, 252, 0.03) 50%, transparent 70%);
+      z-index: -1;
+      pointer-events: none;
+      filter: blur(60px);
     }
 
-    .nav-brand {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      letter-spacing: 2px;
-      color: var(--lavender);
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
     }
-
-    .nav-links {
-      display: flex;
-      gap: 30px;
+    ::-webkit-scrollbar-track {
+      background: var(--bg-deep);
     }
-
-    .nav-links a {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      opacity: 0.7;
-      transition: var(--transition);
-      position: relative;
+    ::-webkit-scrollbar-thumb {
+      background: rgba(112, 226, 255, 0.2);
+      border-radius: 4px;
     }
-
-    .nav-links a:hover {
-      opacity: 1;
-      color: var(--pink);
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--cyan-moon);
     }
 
     /* Layout Containers */
-    section {
-      padding: 120px 20px;
+    .container {
       max-width: 1100px;
       margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      padding: 100px 0;
       position: relative;
+    }
+
+    /* Typography Utilities */
+    .section-tag {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--cyan-moon);
+      margin-bottom: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-tag::before {
+      content: '';
+      width: 16px;
+      height: 1px;
+      background: var(--cyan-moon);
     }
 
     .section-title {
-      font-size: 2.5rem;
-      margin-bottom: 60px;
-      text-align: center;
-      color: var(--cream);
+      font-family: var(--font-heading);
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 24px;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 650px;
+      font-weight: 300;
+      margin-bottom: 40px;
+    }
+
+    /* Glass Cards */
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-glass);
+      border-radius: 24px;
+      padding: 32px;
+      transition: all var(--transition-smooth);
       position: relative;
-      display: inline-block;
-      left: 50%;
-      transform: translateX(-50%);
+      overflow: hidden;
     }
 
-    .section-title::after {
-      content: '';
-      position: absolute;
-      bottom: -15px;
-      left: 25%;
-      width: 50%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--lavender), transparent);
+    .glass-card:hover {
+      border-color: var(--border-glow);
+      box-shadow: 0 10px 30px -10px rgba(112, 226, 255, 0.15);
+      transform: translateY(-4px);
     }
 
-    /* Hero Section */
-    .hero {
-      min-height: 100vh;
+    /* Navigation */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 20px 0;
+      transition: all var(--transition-fast);
+    }
+
+    .navbar.scrolled {
+      background: rgba(5, 7, 17, 0.85);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-bottom: 1px solid var(--border-glass);
+      padding: 14px 0;
+    }
+
+    .nav-container {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      position: relative;
-      padding-top: 80px;
-    }
-
-    .hero-img-container {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      z-index: -1;
-      opacity: 0.15;
-      mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
-    }
-    .hero-img-container img {
-      width: 100%; height: 100%; object-fit: cover;
-    }
-
-    .avatar-wrapper {
-      position: relative;
-      margin-bottom: 30px;
-    }
-    
-    .avatar {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      border: 1px solid var(--lavender);
-      object-fit: cover;
-      box-shadow: 0 0 30px rgba(155, 136, 237, 0.2);
-      padding: 5px;
-      background: var(--bg-alt);
-    }
-
-    .hero h1 {
-      font-size: 4.5rem;
-      margin-bottom: 15px;
-      background: linear-gradient(135deg, var(--cream), var(--lavender));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: 2px;
-    }
-
-    .hero-subtitle {
-      font-size: 1.1rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--cyan);
-      margin-bottom: 30px;
-    }
-
-    .hero-desc {
-      max-width: 600px;
-      font-size: 1.1rem;
-      color: #999;
-      margin: 0 auto;
-    }
-
-    /* About Section */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
+      justify-content: space-between;
       align-items: center;
     }
 
-    .about-text p {
-      margin-bottom: 20px;
-      font-size: 1.1rem;
-      color: #ccc;
-    }
-
-    .about-text strong { color: var(--pink); font-weight: 400; }
-
-    .about-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-top: 40px;
-    }
-
-    .stat-card {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      padding: 20px;
-      border-radius: 12px;
-      backdrop-filter: blur(10px);
-    }
-
-    .stat-card h3 {
-      font-size: 0.9rem;
-      color: var(--lavender);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 5px;
-    }
-
-    .stat-card p {
-      font-family: 'Playfair Display', serif;
+    .nav-brand {
+      font-family: var(--font-heading);
       font-size: 1.5rem;
-      color: var(--cream);
-    }
-
-    /* Skills */
-    .skills-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      justify-content: center;
-    }
-
-    .skill-tag {
-      background: rgba(137, 196, 244, 0.05);
-      border: 1px solid rgba(137, 196, 244, 0.2);
-      padding: 10px 20px;
-      border-radius: 30px;
-      font-size: 0.95rem;
-      color: var(--cyan);
-      transition: var(--transition);
-      cursor: default;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    .skill-tag:hover {
-      background: rgba(137, 196, 244, 0.15);
-      border-color: var(--cyan);
-      transform: translateY(-2px);
+    .nav-brand span {
+      color: var(--cyan-moon);
     }
 
-    .skill-tag img { width: 18px; height: 18px; }
-
-    /* Projects */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 40px;
-    }
-
-    .project-card {
-      background: var(--bg-alt);
-      border: 1px solid var(--glass-border);
-      border-radius: 16px;
-      overflow: hidden;
-      transition: var(--transition);
-      position: relative;
-    }
-
-    .project-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--lavender);
-      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-    }
-
-    .project-img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      opacity: 0.8;
-      transition: var(--transition);
-    }
-
-    .project-card:hover .project-img { opacity: 1; }
-
-    .project-content { padding: 30px; }
-
-    .project-title {
-      font-size: 1.5rem;
-      color: var(--cream);
-      margin-bottom: 10px;
-    }
-
-    .project-desc {
-      font-size: 0.95rem;
-      color: #aaa;
-      margin-bottom: 20px;
-    }
-
-    .project-tech {
+    .nav-links {
       display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+      gap: 24px;
+      list-style: none;
     }
 
-    .tech-pill {
-      font-size: 0.75rem;
-      padding: 4px 10px;
-      background: var(--charcoal);
-      border-radius: 4px;
-      color: var(--lavender);
-      letter-spacing: 1px;
-    }
-
-    /* KimiShinu Transition */
-    .transition-section {
-      text-align: center;
-      padding: 80px 20px;
-      background: linear-gradient(to bottom, var(--bg-deep), var(--navy), var(--bg-deep));
-      border-top: 1px solid rgba(244, 181, 205, 0.1);
-      border-bottom: 1px solid rgba(244, 181, 205, 0.1);
-      margin: 60px 0;
-    }
-
-    .transition-section h2 {
-      font-size: 2rem;
-      color: var(--pink);
-      margin-bottom: 20px;
-      font-style: italic;
-    }
-
-    .transition-section p {
-      max-width: 600px;
-      margin: 0 auto;
-      color: #ccc;
-    }
-
-    /* Ali x Lizzy Section */
-    .couple-section {
-      padding: 100px 20px;
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      transition: color var(--transition-fast);
       position: relative;
     }
-    
-    .couple-section::before {
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--cyan-moon);
+    }
+
+    .nav-link::after {
       content: '';
       position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: url('data:image/svg+xml;utf8,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle cx="2" cy="2" r="1" fill="%23f4b5cd" opacity="0.05"/></svg>');
-      z-index: -1;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--cyan-moon);
+      transition: width var(--transition-fast);
     }
 
-    .couple-layout {
+    .nav-link:hover::after, .nav-link.active::after {
+      width: 100%;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-main);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* HERO SECTION */
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 120px;
+      position: relative;
+    }
+
+    .hero-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 340px;
       gap: 60px;
       align-items: center;
     }
 
-    .character-cards {
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 16px;
+      border-radius: 30px;
+      background: rgba(112, 226, 255, 0.08);
+      border: 1px solid var(--border-glass);
+      font-size: 0.85rem;
+      color: var(--cyan-soft);
+      margin-bottom: 24px;
+    }
+
+    .hero-badge .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cyan-moon);
+      box-shadow: 0 0 10px var(--cyan-moon);
+    }
+
+    .hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(3rem, 6vw, 4.8rem);
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #ffffff 30%, var(--cyan-soft) 70%, var(--lavender-muted) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-tagline {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-bottom: 32px;
+      max-width: 580px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all var(--transition-fast);
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--cyan-moon), #38bdf8);
+      color: var(--bg-deep);
+      box-shadow: 0 4px 20px rgba(112, 226, 255, 0.3);
+      border: none;
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 6px 25px rgba(112, 226, 255, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      border: 1px solid var(--border-glass);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--border-glow);
+      transform: translateY(-2px);
+    }
+
+    /* Hero Avatar Card */
+    .avatar-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    .avatar-frame {
+      width: 280px;
+      height: 350px;
+      border-radius: 28px;
+      position: relative;
+      padding: 8px;
+      background: linear-gradient(145deg, rgba(112, 226, 255, 0.3), rgba(192, 132, 252, 0.1));
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 22px;
+      filter: saturate(1.05);
+      transition: transform var(--transition-smooth);
+    }
+
+    .avatar-frame:hover .avatar-img {
+      transform: scale(1.02);
+    }
+
+    .avatar-star-decoration {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      font-size: 2rem;
+      color: var(--gold-star);
+      filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.6));
+      animation: float 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes float {
+      from { transform: translateY(0) rotate(0deg); }
+      to { transform: translateY(-10px) rotate(15deg); }
+    }
+
+    /* ABOUT SECTION */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
+    }
+
+    .about-text p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      font-weight: 300;
+      margin-bottom: 20px;
+      line-height: 1.8;
+    }
+
+    .about-text strong {
+      color: var(--cyan-soft);
+      font-weight: 500;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-glass);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--cyan-moon);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* INTERESTS SECTION */
+    .interests-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .interest-card {
       display: flex;
       flex-direction: column;
-      gap: 30px;
+      gap: 16px;
     }
 
-    .char-card {
+    .interest-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: rgba(112, 226, 255, 0.1);
+      border: 1px solid var(--border-glass);
       display: flex;
-      background: rgba(28, 31, 46, 0.6);
-      border-left: 3px solid var(--red-accent);
-      border-radius: 0 12px 12px 0;
+      align-items: center;
+      justify-content: center;
+      color: var(--cyan-moon);
+      font-size: 1.5rem;
+    }
+
+    .interest-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .interest-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    /* TECH STACK SECTION */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 16px;
+    }
+
+    .tech-card {
+      background: rgba(15, 21, 46, 0.5);
+      border: 1px solid var(--border-glass);
+      border-radius: 16px;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      transition: all var(--transition-fast);
+    }
+
+    .tech-card:hover {
+      border-color: var(--border-glow);
+      background: rgba(23, 31, 66, 0.8);
+      transform: translateY(-4px);
+    }
+
+    .tech-icon {
+      width: 42px;
+      height: 42px;
+    }
+
+    .tech-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    /* PROJECTS SECTION */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 28px;
+    }
+
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .project-image-box {
+      width: 100%;
+      height: 180px;
+      border-radius: 16px;
       overflow: hidden;
-      backdrop-filter: blur(5px);
-    }
-    
-    .char-card.lizzy { border-left-color: var(--cyan); }
-
-    .char-img {
-      width: 120px;
-      object-fit: cover;
-      filter: grayscale(30%) contrast(1.1);
-    }
-
-    .char-info { padding: 25px; }
-    .char-info h3 { font-size: 1.4rem; color: var(--cream); margin-bottom: 5px; }
-    .char-info p { font-size: 0.9rem; color: #999; }
-
-    .couple-text h2 {
-      font-size: 2.5rem;
       margin-bottom: 20px;
-      color: var(--pink);
-    }
-
-    .couple-text p {
-      margin-bottom: 20px;
-      color: #bbb;
-      font-size: 1.05rem;
-    }
-
-    .quote-box {
-      margin-top: 40px;
-      padding: 30px;
-      background: rgba(139, 43, 58, 0.05);
-      border: 1px solid rgba(139, 43, 58, 0.2);
-      border-radius: 12px;
       position: relative;
     }
 
-    .quote-box p {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 1.2rem;
-      color: var(--cream);
-      margin: 0;
+    .project-image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-smooth);
     }
 
-    /* Gallery */
+    .project-card:hover .project-image-box img {
+      transform: scale(1.05);
+    }
+
+    .project-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: auto;
+      padding-top: 16px;
+    }
+
+    .project-tag {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(112, 226, 255, 0.08);
+      color: var(--cyan-soft);
+      border: 1px solid rgba(112, 226, 255, 0.15);
+      font-family: var(--font-code);
+    }
+
+    /* PERSONAL / BEYOND THE CODE */
+    .quote-box {
+      margin: 40px 0;
+      padding: 32px;
+      background: linear-gradient(135deg, rgba(112, 226, 255, 0.05), rgba(192, 132, 252, 0.05));
+      border-left: 3px solid var(--cyan-moon);
+      border-radius: 0 20px 20px 0;
+      position: relative;
+    }
+
+    .quote-text {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-style: italic;
+      color: #fff;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .quote-author {
+      font-size: 0.85rem;
+      color: var(--lavender-muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* KIMISHINU SECTION */
+    .kimishinu-hero {
+      background: linear-gradient(180deg, rgba(9, 13, 32, 0) 0%, rgba(19, 25, 54, 0.8) 100%);
+      border: 1px solid var(--border-glass);
+      border-radius: 32px;
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kimishinu-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 80% 20%, rgba(192, 132, 252, 0.15), transparent 50%);
+      pointer-events: none;
+    }
+
+    .kimishinu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .jp-title {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      color: var(--lavender-muted);
+      letter-spacing: 2px;
+    }
+
+    .kimishinu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 30px;
+    }
+
+    .kimishinu-meta-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .kimishinu-meta-item {
+      display: flex;
+      gap: 16px;
+      font-size: 0.95rem;
+    }
+
+    .kimishinu-meta-label {
+      color: var(--cyan-moon);
+      width: 100px;
+      flex-shrink: 0;
+    }
+
+    .kimishinu-meta-value {
+      color: var(--text-muted);
+    }
+
+    /* ALI X LIZZY SECTION */
+    .ali-lizzy-section {
+      background: radial-gradient(circle at 50% 50%, rgba(20, 15, 38, 0.8) 0%, var(--bg-deep) 100%);
+      border-radius: 40px;
+      padding: 60px 40px;
+      border: 1px solid rgba(244, 114, 182, 0.2);
+      margin-top: 40px;
+    }
+
+    .couple-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .couple-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 5vw, 3.8rem);
+      color: #fff;
+      background: linear-gradient(135deg, #fff, var(--pink-soft), var(--lavender-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .couple-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .character-card {
+      background: rgba(10, 14, 33, 0.7);
+      border: 1px solid rgba(192, 132, 252, 0.2);
+      border-radius: 24px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .character-card.ali {
+      border-color: rgba(112, 226, 255, 0.3);
+    }
+    .character-card.lizzy {
+      border-color: rgba(244, 114, 182, 0.3);
+    }
+
+    .char-name {
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .ali .char-name { color: var(--cyan-soft); }
+    .lizzy .char-name { color: var(--pink-soft); }
+
+    .char-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .dynamic-box {
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 20px;
+      padding: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .dynamic-box h4 {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      color: var(--lavender-muted);
+      margin-bottom: 12px;
+    }
+
+    /* GALLERY SECTION */
     .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 20px;
     }
 
     .gallery-item {
-      aspect-ratio: 1;
-      border-radius: 12px;
-      overflow: hidden;
       position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      border: 1px solid var(--border-glass);
+      cursor: pointer;
     }
 
     .gallery-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: var(--transition);
-      opacity: 0.7;
+      transition: transform var(--transition-smooth);
     }
 
     .gallery-item:hover img {
-      opacity: 1;
-      transform: scale(1.05);
+      transform: scale(1.08);
     }
 
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 60px 20px;
-      border-top: 1px solid var(--glass-border);
-      color: #777;
+    .gallery-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px;
+      background: linear-gradient(to top, rgba(5, 7, 17, 0.9), transparent);
+      color: #fff;
       font-size: 0.9rem;
+      opacity: 0;
+      transition: opacity var(--transition-fast);
     }
 
-    /* Mobile Responsive */
+    .gallery-item:hover .gallery-caption {
+      opacity: 1;
+    }
+
+    /* FOOTER & CONFIG TABLE */
+    footer {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-glass);
+      padding: 60px 0 40px;
+      margin-top: 100px;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-brand {
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .dev-config-section {
+      background: rgba(5, 7, 17, 0.6);
+      border: 1px solid var(--border-glass);
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 20px;
+    }
+
+    .dev-config-title {
+      font-family: var(--font-code);
+      font-size: 0.85rem;
+      color: var(--cyan-moon);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .config-table-wrapper {
+      overflow-x: auto;
+    }
+
+    .config-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-code);
+      font-size: 0.8rem;
+      text-align: left;
+    }
+
+    .config-table th {
+      color: var(--text-dim);
+      border-bottom: 1px solid var(--border-glass);
+      padding: 8px 12px;
+    }
+
+    .config-table td {
+      color: var(--text-muted);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      padding: 8px 12px;
+      word-break: break-all;
+    }
+
+    .config-table tr:hover td {
+      color: var(--cyan-soft);
+      background: rgba(112, 226, 255, 0.02);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 24px;
+    }
+
+    /* RESPONSIVE DESIGN */
     @media (max-width: 900px) {
-      .about-grid, .couple-layout { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-      .hero h1 { font-size: 3.5rem; }
-      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    
-    @media (max-width: 600px) {
-      .gallery-grid { grid-template-columns: 1fr; }
-      .char-card { flex-direction: column; }
-      .char-img { width: 100%; height: 150px; }
-    }
-    
-    @media (prefers-reduced-motion: reduce) {
-      * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero-tagline {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-actions {
+        justify-content: center;
+      }
+
+      .avatar-wrapper {
+        margin-top: 20px;
+      }
+
+      .about-grid, .kimishinu-grid, .couple-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-links.mobile-active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(5, 7, 17, 0.95);
+        backdrop-filter: blur(20px);
+        padding: 24px;
+        border-bottom: 1px solid var(--border-glass);
+      }
+
+      .menu-toggle {
+        display: block;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Ambient Canvas for subtle stars/particles -->
-  <canvas id="ambient-canvas"></canvas>
-  <div class="particles" id="particles"></div>
+  <!-- Background Elements -->
+  <canvas id="canvas-starfield"></canvas>
+  <div class="moonlight-glow"></div>
 
-  <!-- Navigation -->
-  <nav>
-    <div class="nav-brand">A.TSUKIMURA</div>
-    <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Work</a>
-      <a href="#favorites">Favorites</a>
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#hero" class="nav-brand">Aqua <span>Tsukimura</span></a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#hero" class="nav-link active">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#interests" class="nav-link">Interests</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#beyond-code" class="nav-link">Beyond Code</a></li>
+        <li><a href="#kimishinu" class="nav-link">KimiShinu</a></li>
+        <li><a href="#ali-lizzy" class="nav-link">Ali × Lizzy</a></li>
+        <li><a href="#gallery" class="nav-link">Gallery</a></li>
+      </ul>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <header class="hero" id="home">
-    <div class="hero-img-container">
-      <img id="img-hero" src="" alt="Atmospheric Background">
+  <!-- HERO SECTION -->
+  <section id="hero" class="hero-section">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="status-dot"></span> Full-Stack Developer & Creator
+        </div>
+        <h1 class="hero-title">Aqua Tsukimura</h1>
+        <p class="hero-tagline">
+          At 14, I balance full-stack architecture with an unyielding love for anime, crafting refined digital experiences that shine under the spotlight.
+        </p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary">Explore Projects</a>
+          <a href="#about" class="btn btn-secondary">About Aqua</a>
+        </div>
+      </div>
+      <div class="avatar-wrapper">
+        <div class="avatar-frame">
+          <span class="avatar-star-decoration">★</span>
+          <img id="aquaAvatarImg" class="avatar-img" alt="Aqua Tsukimura Avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='350' viewBox='0 0 280 350'%3E%3Crect width='100%25' height='100%25' fill='%230a0e21'/%3E%3Ctext x='50%25' y='50%25' fill='%2370e2ff' font-family='sans-serif' font-size='16' text-anchor='middle'%3ELoading Avatar...%3C/text%3E%3C/svg%3E">
+        </div>
+      </div>
     </div>
-    
-    <div class="avatar-wrapper">
-      <img id="img-avatar" src="" alt="Aqua Tsukimura" class="avatar">
-    </div>
-    
-    <h1>Aqua Tsukimura</h1>
-    <div class="hero-subtitle">Full-Stack Developer</div>
-    <p class="hero-desc">
-      Crafting robust digital experiences and intricate systems. At 14, I balance a love for complex architectures with an appreciation for dark fantasy narratives.
-    </p>
-  </header>
+  </section>
 
-  <!-- About Section -->
+  <!-- ABOUT SECTION -->
   <section id="about">
-    <h2 class="section-title">The Profile</h2>
-    <div class="about-grid">
-      <div class="about-text">
-        <p>
-          I am a developer specializing in systems engineering, backend infrastructure, and custom client interfaces. Whether it's architecting a robust Discord bot or reverse-engineering mobile game clients, I treat code like an intricate narrative.
-        </p>
-        <p>
-          My work is defined by precision and aesthetic intent. I draw heavy inspiration from the melancholic, elegant world of <strong>Kimi ga Shinu Made Koi wo Shitai</strong>, translating its emotional depth and atmospheric visual language into the spaces I build.
-        </p>
+    <div class="container">
+      <div class="section-tag">01 / Profile</div>
+      <h2 class="section-title">Architecting Digital Elegance</h2>
+      <div class="about-grid">
+        <div class="glass-card about-text">
+          <p>
+            Welcome to my personal workspace. I am <strong>Aqua Tsukimura</strong>, a 14-year-old developer passionate about building performant, low-latency, and visually captivating systems.
+          </p>
+          <p>
+            My approach blends robust software engineering principles with aesthetic storytelling. Whether writing core backend microservices in <strong>C++</strong> and <strong>Python</strong>, deploying scalable infrastructure with <strong>Kubernetes</strong> and <strong>Kafka</strong>, or designing high-speed client interfaces in <strong>TypeScript</strong>, I strive for clarity, speed, and elegance.
+          </p>
+          <p>
+            Beyond code, I draw inspiration from dark fantasy literature, emotional narrative structures, and character-driven manga works like <em>KimiShinu</em>.
+          </p>
+        </div>
         <div class="about-stats">
           <div class="stat-card">
-            <h3>Age</h3>
-            <p>14</p>
+            <div class="stat-num">14</div>
+            <div class="stat-label">Years Old</div>
           </div>
           <div class="stat-card">
-            <h3>Focus</h3>
-            <p>Full-Stack</p>
+            <div class="stat-num">13+</div>
+            <div class="stat-label">Core Techs</div>
           </div>
-        </div>
-      </div>
-      <div class="about-image">
-        <!-- Abstract visual placeholder to balance layout -->
-        <div style="width:100%; height:300px; background:var(--glass); border:1px solid var(--glass-border); border-radius:16px; position:relative; overflow:hidden;">
-          <div style="position:absolute; width:200px; height:200px; background:var(--lavender); filter:blur(100px); top:50%; left:50%; transform:translate(-50%, -50%); opacity:0.2;"></div>
+          <div class="stat-card">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Dedication</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">∞</div>
+            <div class="stat-label">Curiosity</div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Skills Section -->
+  <!-- INTERESTS SECTION -->
+  <section id="interests">
+    <div class="container">
+      <div class="section-tag">02 / Passions</div>
+      <h2 class="section-title">Interests & Core Disciplines</h2>
+      <p class="subtitle">A blend of technical precision and artistic exploration.</p>
+      
+      <div class="interests-grid">
+        <div class="glass-card interest-card">
+          <div class="interest-icon">⚡</div>
+          <h3 class="interest-title">Systems Engineering</h3>
+          <p class="interest-desc">Designing low-level, high-throughput architectures using C, C++, C#, and Kotlin with strict memory and performance goals.</p>
+        </div>
+        <div class="glass-card interest-card">
+          <div class="interest-icon">☁️</div>
+          <div class="interest-title">Cloud Infrastructure</div>
+          <p class="interest-desc">Managing containerized workloads and message streaming with Kubernetes, Docker, Kafka, Redis, Azure, and Cloudflare.</p>
+        </div>
+        <div class="glass-card interest-card">
+          <div class="interest-icon">✨</div>
+          <h3 class="interest-title">Full-Stack Development</h3>
+          <p class="interest-desc">Creating reactive, responsive web applications with TypeScript, Python, modern APIs, and clean component architecture.</p>
+        </div>
+        <div class="glass-card interest-card">
+          <div class="interest-icon">🌙</div>
+          <h3 class="interest-title">Anime & Storytelling</h3>
+          <p class="interest-desc">Deep appreciation for emotional narratives, atmospheric dark fantasy, and nuanced character relationships in manga.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS SECTION -->
   <section id="skills">
-    <h2 class="section-title">Tech Repertoire</h2>
-    <div class="skills-container" id="skills-container">
-      <!-- Skills populated by JS -->
+    <div class="container">
+      <div class="section-tag">03 / Tech Repertoire</div>
+      <h2 class="section-title">Languages & Technologies</h2>
+      <p class="subtitle">The tools and technologies I use to build scalable software.</p>
+
+      <div class="tech-grid" id="techGrid">
+        <!-- Populated via script -->
+      </div>
     </div>
   </section>
 
-  <!-- Projects Section -->
+  <!-- PROJECTS SECTION -->
   <section id="projects">
-    <h2 class="section-title">Selected Works</h2>
-    <div class="projects-grid">
-      
-      <a href="#" class="project-card">
-        <img id="img-project1" src="" alt="Ai X Client" class="project-img">
-        <div class="project-content">
-          <h3 class="project-title">Ai X Interface</h3>
-          <p class="project-desc">Custom modification client landing page for Blockman GO. Built with a focus on seamless user experience and modern web aesthetics.</p>
-          <div class="project-tech">
-            <span class="tech-pill">HTML/CSS</span>
-            <span class="tech-pill">JavaScript</span>
-            <span class="tech-pill">UI Design</span>
+    <div class="container">
+      <div class="section-tag">04 / Portfolio</div>
+      <h2 class="section-title">Featured Projects & Builds</h2>
+      <p class="subtitle">Selected software developments highlighting system optimization and clean APIs.</p>
+
+      <div class="projects-grid">
+        <div class="glass-card project-card">
+          <div class="project-image-box">
+            <img id="proj1Img" alt="Starfall Engine Project" src="">
+          </div>
+          <h3 class="interest-title" style="margin-bottom: 8px;">Starfall High-Speed Gateway</h3>
+          <p class="interest-desc">A high-performance microservices routing layer engineered for ultra-low latency event handling and dynamic load scheduling.</p>
+          <div class="project-tags">
+            <span class="project-tag">C++</span>
+            <span class="project-tag">Kafka</span>
+            <span class="project-tag">Redis</span>
+            <span class="project-tag">Azure</span>
           </div>
         </div>
-      </a>
 
-      <a href="#" class="project-card">
-        <img id="img-project2" src="" alt="Oguri Cap Bot" class="project-img">
-        <div class="project-content">
-          <h3 class="project-title">Oguri Cap</h3>
-          <p class="project-desc">A comprehensive Discord application featuring advanced economy systems, dynamic image rendering, and detailed analytics tracking.</p>
-          <div class="project-tech">
-            <span class="tech-pill">Python</span>
-            <span class="tech-pill">Pillow</span>
-            <span class="tech-pill">Discord API</span>
+        <div class="glass-card project-card">
+          <div class="project-image-box">
+            <img id="proj2Img" alt="AetherNet Mesh Project" src="">
+          </div>
+          <h3 class="interest-title" style="margin-bottom: 8px;">AetherNet Mesh Cluster</h3>
+          <p class="interest-desc">Distributed pub-sub messaging telemetry service built for scalable container orchestration across Kubernetes nodes.</p>
+          <div class="project-tags">
+            <span class="project-tag">Python</span>
+            <span class="project-tag">Kubernetes</span>
+            <span class="project-tag">Cloudflare</span>
+            <span class="project-tag">TypeScript</span>
           </div>
         </div>
-      </a>
 
-      <a href="#" class="project-card">
-        <img id="img-project3" src="" alt="Prax Client" class="project-img">
-        <div class="project-content">
-          <h3 class="project-title">Prax Client & APIs</h3>
-          <p class="project-desc">Custom Lua-based overlays, C++ native libraries, and a distributed Node.js tracking infrastructure hosted on Render.</p>
-          <div class="project-tech">
-            <span class="tech-pill">C++</span>
-            <span class="tech-pill">Lua</span>
-            <span class="tech-pill">Node.js</span>
+        <div class="glass-card project-card">
+          <div class="project-image-box">
+            <img id="proj3Img" alt="Starlight Shell Project" src="">
           </div>
-        </div>
-      </a>
-
-    </div>
-  </section>
-
-  <!-- Transition -->
-  <div class="transition-section" id="favorites">
-    <h2>Beyond the Code</h2>
-    <p>
-      There is an intersection where technology meets artistry. When I am not architecting systems or compiling binaries, my aesthetic and emotional sensibilities are deeply rooted in the dark fantasy narratives and profound relationships found within <em>Kimi ga Shinu Made Koi wo Shitai</em>.
-    </p>
-  </div>
-
-  <!-- KimiShinu / Ali x Lizzy Section -->
-  <section class="couple-section">
-    <h2 class="section-title" style="color: var(--pink); border-color: rgba(244, 181, 205, 0.3);">A Personal Favourite</h2>
-    
-    <div class="couple-layout">
-      <div class="couple-text">
-        <h2>Ali Maud & Lizzy Seiran</h2>
-        <p>
-          Within the bittersweet, war-torn setting of an orphanage for magical assassins, the dynamic between Ali and Lizzy stands out as an anchor of emotional resonance. 
-        </p>
-        <p>
-          Lizzy's unwavering strength and strict adherence to duty mask a profound vulnerability, complemented beautifully by Ali's quiet resilience and veteran experience. Their relationship represents a tender defiance against the tragic inevitability of their world—a quiet promise of loyalty in the dark.
-        </p>
-        <div class="quote-box">
-          <p>"Even if the world is ending, some bonds remain immutable."</p>
-        </div>
-      </div>
-      
-      <div class="character-cards">
-        <div class="char-card">
-          <img id="img-ali" src="" alt="Ali Maud" class="char-img">
-          <div class="char-info">
-            <h3>Ali Maud</h3>
-            <p>Veteran student. Quiet, fiercely protective, and bearing the weight of experience. A grounding presence amidst chaos.</p>
-          </div>
-        </div>
-        
-        <div class="char-card lizzy">
-          <img id="img-lizzy" src="" alt="Lizzy Seiran" class="char-img">
-          <div class="char-info">
-            <h3>Lizzy Seiran</h3>
-            <p>Strong-willed and principled. Driven by a sense of duty and loyalty, shielding her internal fears with unwavering dedication.</p>
+          <h3 class="interest-title" style="margin-bottom: 8px;">Starlight Environment Toolkit</h3>
+          <p class="interest-desc">Custom CLI utility framework and automation platform for environment configuration, script execution, and API validation.</p>
+          <div class="project-tags">
+            <span class="project-tag">Lua</span>
+            <span class="project-tag">C#</span>
+            <span class="project-tag">Kotlin</span>
+            <span class="project-tag">VSCode</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Gallery -->
-  <section>
-    <h2 class="section-title">Atmosphere</h2>
-    <div class="gallery-grid">
-      <div class="gallery-item"><img id="img-gallery1" src="" alt="Atmosphere 1"></div>
-      <div class="gallery-item"><img id="img-gallery2" src="" alt="Atmosphere 2"></div>
-      <div class="gallery-item"><img id="img-gallery3" src="" alt="Atmosphere 3"></div>
+  <!-- BEYOND THE CODE -->
+  <section id="beyond-code">
+    <div class="container">
+      <div class="section-tag">05 / Personal</div>
+      <h2 class="section-title">Beyond the Code</h2>
+      <p class="subtitle">Reflections, favourite literature, and personal philosophy.</p>
+
+      <div class="quote-box">
+        <p class="quote-text" id="dynamicQuote">"Lies are a refined form of love."</p>
+        <p class="quote-author" id="dynamicAuthor">— Ai Hoshino</p>
+      </div>
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- KIMISHINU SECTION -->
+  <section id="kimishinu">
+    <div class="container">
+      <div class="kimishinu-hero">
+        <div class="kimishinu-header">
+          <div>
+            <div class="jp-title">きみが死ぬまで恋をしたい</div>
+            <h2 class="section-title" style="margin-bottom: 0;">I Want to Love You Till Your Dying Day</h2>
+          </div>
+          <div class="hero-badge" style="background: rgba(192, 132, 252, 0.1); border-color: rgba(192, 132, 252, 0.3); color: var(--lavender-muted);">
+            Favourite Manga Highlight
+          </div>
+        </div>
+
+        <p class="interest-desc" style="font-size: 1.1rem; line-height: 1.8; color: var(--text-main); margin-bottom: 24px;">
+          <em>KimiShinu</em> (Kimi ga Shinu Made Koi wo Shitai) by Nachi Aono is a deeply moving dark fantasy yuri manga set within a secret military boarding school for orphaned girls trained to fight in a devastating war.
+        </p>
+
+        <div class="kimishinu-grid">
+          <div>
+            <h3 class="interest-title" style="margin-bottom: 16px; color: var(--cyan-soft);">Core Themes & Atmosphere</h3>
+            <p class="interest-desc" style="line-height: 1.7;">
+              The narrative explores the fragility of youth, quiet devotion under tragic circumstances, mortality, and the intense beauty of human warmth amidst cold adversity. Its gentle visual rhythm contrasts sharply with its heavy, melancholic world.
+            </p>
+          </div>
+          <div>
+            <h3 class="interest-title" style="margin-bottom: 16px; color: var(--lavender-muted);">Series Details</h3>
+            <ul class="kimishinu-meta-list">
+              <li class="kimishinu-meta-item">
+                <span class="kimishinu-meta-label">Author</span>
+                <span class="kimishinu-meta-value">Nachi Aono (あおのなち)</span>
+              </li>
+              <li class="kimishinu-meta-item">
+                <span class="kimishinu-meta-label">Genre</span>
+                <span class="kimishinu-meta-value">Yuri, Dark Fantasy, Tragedy, Supernatural</span>
+              </li>
+              <li class="kimishinu-meta-item">
+                <span class="kimishinu-meta-label">Setting</span>
+                <span class="kimishinu-meta-value">Foster Facility & War Academy</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ALI MAUD X LIZZY SEIRAN SECTION -->
+  <section id="ali-lizzy">
+    <div class="container">
+      <div class="ali-lizzy-section">
+        <div class="couple-header">
+          <div class="section-tag" style="color: var(--pink-soft);">Special Spotlight</div>
+          <h2 class="couple-title">Ali Maud × Lizzy Seiran</h2>
+          <p class="subtitle" style="margin: 12px auto 0; text-align: center;">
+            The emotional centerpiece of <em>KimiShinu</em> — a bond defined by quiet tenderness, sacrifice, and unwavering commitment.
+          </p>
+        </div>
+
+        <div class="couple-cards">
+          <div class="character-card ali">
+            <h3 class="char-name">Ali Maud (シーナ)</h3>
+            <p class="char-desc">
+              Soft-spoken, compassionate, and gentle. Ali is an orphan girl who initially struggles with combat magic capabilities, yet possesses an immense capacity for empathy and warmth toward Lizzy.
+            </p>
+          </div>
+
+          <div class="character-card lizzy">
+            <h3 class="char-name">Lizzy Seiran (ミミ)</h3>
+            <p class="char-desc">
+              Fierce, immensely powerful, and protective. Lizzy carries heavy combat burdens on the frontlines, finding her only true solace and peace in the gentle presence of Ali.
+            </p>
+          </div>
+        </div>
+
+        <div class="dynamic-box">
+          <h4>The Relationship Dynamic</h4>
+          <p class="interest-desc" style="line-height: 1.8;">
+            In a harsh environment where mortality is an ever-present reality, their relationship serves as a beacon of warmth. Their mutual devotion proves that even in darkness, genuine love provides comfort, dignity, and purpose.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY SECTION -->
+  <section id="gallery">
+    <div class="container">
+      <div class="section-tag">06 / Visuals</div>
+      <h2 class="section-title">Atmospheric Gallery</h2>
+      <p class="subtitle">A visual collection reflecting the mood, stars, and aesthetics of Aqua's world.</p>
+
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img id="gal1Img" alt="Atmospheric Night Sky" src="">
+          <div class="gallery-caption">Starlit Sky & Cosmic Glow</div>
+        </div>
+        <div class="gallery-item">
+          <img id="gal2Img" alt="Moonlight Water Reflections" src="">
+          <div class="gallery-caption">Moonlight on Deep Water</div>
+        </div>
+        <div class="gallery-item">
+          <img id="gal3Img" alt="Melancholic Floral Silhouette" src="">
+          <div class="gallery-caption">Midnight Flora & Twilight</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer>
-    <p>&copy; 2026 Aqua Tsukimura. Developed with precision and intent.</p>
+    <div class="container footer-content">
+      <div class="footer-top">
+        <div class="footer-brand">Aqua Tsukimura</div>
+        <p class="interest-desc">Full-Stack Developer & Anime Enthusiast.</p>
+      </div>
+
+      <!-- Developer Image Configuration Reference Table -->
+      <div class="dev-config-section">
+        <div class="dev-config-title">Centralized Image Configuration Reference Table</div>
+        <div class="config-table-wrapper">
+          <table class="config-table">
+            <thead>
+              <tr>
+                <th>Image Purpose</th>
+                <th>Variable Name</th>
+                <th>Configured URL</th>
+              </tr>
+            </thead>
+            <tbody id="configTableBody">
+              <!-- Populated via script -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        &copy; 2026 Aqua Tsukimura. Visual identity inspired by <em>KimiShinu</em> (Nachi Aono). All rights reserved.
+      </div>
+    </div>
   </footer>
 
+  <!-- JAVASCRIPT -->
   <script>
-    // =======================================================================
-    // CENTRALIZED IMAGE CONFIGURATION
-    // Replace these URLs to update images across the site.
-    // =======================================================================
+    /* ==========================================================================
+       1. CENTRALIZED IMAGE CONFIGURATION OBJECT
+       ========================================================================== */
     const images = {
-      aquaAvatar: "https://api.dicebear.com/7.x/initials/svg?seed=Aqua&backgroundColor=151b2e", // Fallback, will be replaced by Discord API if successful
-      aquaHero: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2000&auto=format&fit=crop",
-      project1: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?q=80&w=800&auto=format&fit=crop",
-      project2: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop",
-      project3: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop",
-      ali: "https://images.unsplash.com/photo-1509909756405-be0199881695?q=80&w=400&auto=format&fit=crop", 
-      lizzy: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop",
-      gallery1: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?q=80&w=800&auto=format&fit=crop",
-      gallery2: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=800&auto=format&fit=crop",
-      gallery3: "https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?q=80&w=800&auto=format&fit=crop"
+      aquaAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80", // Fallback, will attempt dynamic fetch
+      project1: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80",
+      project2: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80",
+      project3: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&w=800&q=80",
+      ali: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80",
+      lizzy: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80",
+      couple: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80",
+      gallery1: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=800&q=80",
+      gallery2: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=800&q=80",
+      gallery3: "https://images.unsplash.com/photo-1499002238440-d264edd596ec?auto=format&fit=crop&w=800&q=80"
     };
 
-    // Apply images to DOM
-    document.getElementById('img-avatar').src = images.aquaAvatar;
-    document.getElementById('img-hero').src = images.aquaHero;
-    document.getElementById('img-project1').src = images.project1;
-    document.getElementById('img-project2').src = images.project2;
-    document.getElementById('img-project3').src = images.project3;
-    document.getElementById('img-ali').src = images.ali;
-    document.getElementById('img-lizzy').src = images.lizzy;
-    document.getElementById('img-gallery1').src = images.gallery1;
-    document.getElementById('img-gallery2').src = images.gallery2;
-    document.getElementById('img-gallery3').src = images.gallery3;
-
-    // =======================================================================
-    // DISCORD AVATAR RETRIEVAL
-    // =======================================================================
-    const discordUserId = "1487742878951407758";
-    
-    async function fetchDiscordAvatar() {
-      try {
-        // Using Lanyard API as a public, secure proxy to get Discord presence/user info 
-        // without exposing a Bot Token. (User must be in a server with Lanyard bot, 
-        // or we gracefully fallback to the configured image).
-        const response = await fetch(`https://api.lanyard.rest/v1/users/${discordUserId}`);
-        const json = await response.json();
-        
-        if (json.success && json.data && json.data.discord_user) {
-          const user = json.data.discord_user;
-          const ext = user.avatar.startsWith('a_') ? 'gif' : 'png';
-          const avatarUrl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${ext}?size=512`;
-          document.getElementById('img-avatar').src = avatarUrl;
-        }
-      } catch (error) {
-        console.warn("Could not retrieve Discord avatar, using fallback.", error);
-      }
-    }
-    
-    fetchDiscordAvatar();
-
-    // =======================================================================
-    // SKILLS GENERATION
-    // =======================================================================
-    const skills = [
-      { name: "Azure", icon: "azure" }, { name: "C", icon: "c" },
-      { name: "C#", icon: "cs" }, { name: "C++", icon: "cpp" },
-      { name: "Cloudflare", icon: "cloudflare" }, { name: "Kafka", icon: "kafka" },
-      { name: "Kotlin", icon: "kotlin" }, { name: "Kubernetes", icon: "kubernetes" },
-      { name: "Lua", icon: "lua" }, { name: "Python", icon: "py" },
-      { name: "Redis", icon: "redis" }, { name: "TypeScript", icon: "ts" },
-      { name: "VSCode", icon: "vscode" }
+    /* ==========================================================================
+       2. TECH STACK DATA
+       ========================================================================== */
+    const techStack = [
+      { name: "C", icon: "https://skillicons.dev/icons?i=c" },
+      { name: "C++", icon: "https://skillicons.dev/icons?i=cpp" },
+      { name: "C#", icon: "https://skillicons.dev/icons?i=cs" },
+      { name: "Python", icon: "https://skillicons.dev/icons?i=py" },
+      { name: "Kotlin", icon: "https://skillicons.dev/icons?i=kotlin" },
+      { name: "TypeScript", icon: "https://skillicons.dev/icons?i=ts" },
+      { name: "Lua", icon: "https://skillicons.dev/icons?i=lua" },
+      { name: "Kafka", icon: "https://skillicons.dev/icons?i=kafka" },
+      { name: "Redis", icon: "https://skillicons.dev/icons?i=redis" },
+      { name: "Kubernetes", icon: "https://skillicons.dev/icons?i=kubernetes" },
+      { name: "Cloudflare", icon: "https://skillicons.dev/icons?i=cloudflare" },
+      { name: "Azure", icon: "https://skillicons.dev/icons?i=azure" },
+      { name: "VSCode", icon: "https://skillicons.dev/icons?i=vscode" }
     ];
 
-    const skillsContainer = document.getElementById('skills-container');
-    skills.forEach(skill => {
-      const el = document.createElement('div');
-      el.className = 'skill-tag';
-      el.innerHTML = `<img src="https://skillicons.dev/icons?i=${skill.icon}" alt="${skill.name}" loading="lazy" /> ${skill.name}`;
-      skillsContainer.appendChild(el);
+    /* ==========================================================================
+       3. QUOTES DATA
+       ========================================================================== */
+    const quotes = [
+      { text: "Lies are a refined form of love.", author: "Ai Hoshino" },
+      { text: "I want to love someone for real.", author: "Ai Hoshino" },
+      { text: "Lying is the best way to protect yourself.", author: "Ai Hoshino" },
+      { text: "Even if it's a lie, I want to be someone who can say 'I love you'.", author: "Ai Hoshino" }
+    ];
+
+    /* ==========================================================================
+       4. INITIALIZATION & DOM BINDING
+       ========================================================================== */
+    document.addEventListener("DOMContentLoaded", () => {
+      initImages();
+      initTechGrid();
+      initQuotes();
+      initDiscordAvatar();
+      initStarfieldCanvas();
+      initNavigation();
+      initConfigTable();
     });
 
-    // =======================================================================
-    // AMBIENT STAR/PARTICLE ANIMATION
-    // =======================================================================
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      const container = document.getElementById('particles');
-      
-      function createParticle() {
-        const p = document.createElement('div');
-        const size = Math.random() * 2 + 1;
-        p.style.width = `${size}px`;
-        p.style.height = `${size}px`;
-        p.style.background = 'white';
-        p.style.position = 'absolute';
-        p.style.borderRadius = '50%';
-        p.style.opacity = Math.random() * 0.5 + 0.1;
-        p.style.left = `${Math.random() * 100}vw`;
-        p.style.bottom = '-10px';
-        p.style.boxShadow = `0 0 ${Math.random()*5+2}px var(--lavender)`;
-        
-        const duration = Math.random() * 10 + 10;
-        p.style.transition = `transform ${duration}s linear, opacity ${duration}s linear`;
-        
-        container.appendChild(p);
-        
-        // Trigger animation
-        requestAnimationFrame(() => {
-          p.style.transform = `translateY(-110vh) translateX(${Math.random() * 100 - 50}px)`;
-          p.style.opacity = '0';
+    function initImages() {
+      document.getElementById("proj1Img").src = images.project1;
+      document.getElementById("proj2Img").src = images.project2;
+      document.getElementById("proj3Img").src = images.project3;
+      document.getElementById("gal1Img").src = images.gallery1;
+      document.getElementById("gal2Img").src = images.gallery2;
+      document.getElementById("gal3Img").src = images.gallery3;
+    }
+
+    function initTechGrid() {
+      const container = document.getElementById("techGrid");
+      container.innerHTML = techStack.map(t => `
+        <div class="tech-card">
+          <img class="tech-icon" src="${t.icon}" alt="${t.name}">
+          <span class="tech-name">${t.name}</span>
+        </div>
+      `).join('');
+    }
+
+    function initQuotes() {
+      let quoteIdx = 0;
+      const quoteEl = document.getElementById("dynamicQuote");
+      const authorEl = document.getElementById("dynamicAuthor");
+
+      setInterval(() => {
+        quoteIdx = (quoteIdx + 1) % quotes.length;
+        quoteEl.style.opacity = '0';
+        authorEl.style.opacity = '0';
+
+        setTimeout(() => {
+          quoteEl.textContent = `"${quotes[quoteIdx].text}"`;
+          authorEl.textContent = `— ${quotes[quoteIdx].author}`;
+          quoteEl.style.opacity = '1';
+          authorEl.style.opacity = '1';
+        }, 400);
+      }, 6000);
+    }
+
+    /* ==========================================================================
+       5. DYNAMIC DISCORD AVATAR RETRIEVAL (USER ID: 1487742878951407758)
+       ========================================================================== */
+    async function initDiscordAvatar() {
+      const targetUserId = "1487742878951407758";
+      const avatarEl = document.getElementById("aquaAvatarImg");
+
+      // Set initial fallback from centralized images object
+      avatarEl.src = images.aquaAvatar;
+
+      try {
+        const response = await fetch(`https://api.lanyard.rest/v1/users/${targetUserId}`);
+        if (!response.ok) throw new Error("Network response was not ok");
+        const data = await response.json();
+
+        if (data.success && data.data && data.data.discord_user && data.data.discord_user.avatar) {
+          const avatarHash = data.data.discord_user.avatar;
+          const isAnimated = avatarHash.startsWith("a_");
+          const ext = isAnimated ? "gif" : "png";
+          const dynamicAvatarUrl = `https://cdn.discordapp.com/avatars/${targetUserId}/${avatarHash}.${ext}?size=512`;
+          
+          // Update both DOM & centralized object
+          avatarEl.src = dynamicAvatarUrl;
+          images.aquaAvatar = dynamicAvatarUrl;
+          initConfigTable(); // Refresh table
+        }
+      } catch (err) {
+        console.warn("Lanyard Discord Avatar Fetch fallback used:", err);
+      }
+    }
+
+    /* ==========================================================================
+       6. CANVAS STARFIELD ANIMATION
+       ========================================================================== */
+    function initStarfieldCanvas() {
+      const canvas = document.getElementById("canvas-starfield");
+      const ctx = canvas.getContext("2d");
+
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
+
+      window.addEventListener("resize", () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      const stars = Array.from({ length: 90 }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        size: Math.random() * 2 + 0.5,
+        alpha: Math.random(),
+        speed: Math.random() * 0.4 + 0.1
+      }));
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+
+        stars.forEach(s => {
+          s.y -= s.speed;
+          if (s.y < 0) {
+            s.y = height;
+            s.x = Math.random() * width;
+          }
+
+          ctx.fillStyle = `rgba(112, 226, 255, ${s.alpha * 0.7})`;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+          ctx.fill();
         });
-        
-        setTimeout(() => p.remove(), duration * 1000);
+
+        requestAnimationFrame(animate);
       }
 
-      setInterval(createParticle, 300);
+      animate();
+    }
+
+    /* ==========================================================================
+       7. NAVIGATION & SCROLL HANDLERS
+       ========================================================================== */
+    function initNavigation() {
+      const navbar = document.getElementById("navbar");
+      const menuToggle = document.getElementById("menuToggle");
+      const navLinks = document.getElementById("navLinks");
+
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      });
+
+      menuToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("mobile-active");
+      });
+
+      // Close menu on link click
+      document.querySelectorAll(".nav-link").forEach(link => {
+        link.addEventListener("click", () => {
+          navLinks.classList.remove("mobile-active");
+        });
+      });
+    }
+
+    /* ==========================================================================
+       8. IMAGE CONFIGURATION TABLE POPULATION
+       ========================================================================== */
+    function initConfigTable() {
+      const tbody = document.getElementById("configTableBody");
+      const rows = [
+        { purpose: "Aqua Profile / Avatar", key: "aquaAvatar", url: images.aquaAvatar },
+        { purpose: "Project 1 (Starfall)", key: "project1", url: images.project1 },
+        { purpose: "Project 2 (AetherNet)", key: "project2", url: images.project2 },
+        { purpose: "Project 3 (Starlight)", key: "project3", url: images.project3 },
+        { purpose: "Ali Maud Character", key: "ali", url: images.ali },
+        { purpose: "Lizzy Seiran Character", key: "lizzy", url: images.lizzy },
+        { purpose: "Couple Spotlight", key: "couple", url: images.couple },
+        { purpose: "Gallery Item 1", key: "gallery1", url: images.gallery1 },
+        { purpose: "Gallery Item 2", key: "gallery2", url: images.gallery2 },
+        { purpose: "Gallery Item 3", key: "gallery3", url: images.gallery3 }
+      ];
+
+      tbody.innerHTML = rows.map(r => `
+        <tr>
+          <td>${r.purpose}</td>
+          <td><code>images.${r.key}</code></td>
+          <td>${r.url}</td>
+        </tr>
+      `).join('');
     }
   </script>
 </body>
