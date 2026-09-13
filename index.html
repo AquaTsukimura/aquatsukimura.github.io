@@ -491,7 +491,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center;
+            object-position: center center;
             animation: imageSlowZoom 16s ease-in-out infinite alternate;
         }
 
@@ -1583,7 +1583,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center;
+            object-position: center center;
             opacity: 0.58;
             filter: saturate(0.84) contrast(1.04);
             animation: imageSlowZoom 20s ease-in-out infinite alternate;
@@ -1809,7 +1809,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center;
+            object-position: center center;
             filter: saturate(0.92);
             transition: transform 0.7s cubic-bezier(.22,1,.36,1), filter 0.7s ease;
         }
@@ -1901,7 +1901,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center;
+            object-position: center center;
             opacity: 0.76;
             filter: saturate(0.9) contrast(1.03);
             transition: transform 1s cubic-bezier(.22,1,.36,1), filter 1s ease;
@@ -2573,14 +2573,6 @@
             transform: none;
         }
 
-        .float {
-            animation: float 7s ease-in-out infinite;
-        }
-
-        .drift {
-            animation: drift 12s ease-in-out infinite;
-        }
-
         @keyframes headerDrop {
             from {
                 opacity: 0;
@@ -2912,24 +2904,6 @@
             to {
                 opacity: 1;
                 transform: scale(1);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) rotate(1.4deg);
-            }
-            50% {
-                transform: translateY(-8px) rotate(0.6deg);
-            }
-        }
-
-        @keyframes drift {
-            0%, 100% {
-                transform: translate3d(0,0,0);
-            }
-            50% {
-                transform: translate3d(10px,-8px,0);
             }
         }
 
@@ -3373,7 +3347,7 @@
                         somewhere between full-stack development, anime, and making digital things glow a little too much.
                     </p>
                     <div class="hero-actions">
-                        <a class="button primary" href="#about">meet aqua ↓</a>
+                        <a class="button primary" href="#about">meet me ↓</a>
                         <a class="button" href="#code">see the code →</a>
                     </div>
                     <div class="hero-note">
@@ -3387,18 +3361,18 @@
                         <span class="tape two" aria-hidden="true"></span>
                         <img class="hero-image" src="" alt="KimiShinu promotional key visual" id="hero-image" decoding="async">
                         <div class="hero-caption">
-                            <span class="label">aqua's little corner</span>
+                            <span class="label">my little corner</span>
                             <span class="quote">night / code / flowers</span>
                         </div>
                     </div>
 
                     <div class="avatar-orbit" aria-live="polite">
                         <div class="avatar-shell">
-                            <img class="avatar" id="aqua-avatar" src="" alt="Aqua Tsukimura Discord avatar" decoding="async">
+                            <img class="avatar" id="aqua-avatar" src="" alt="My Discord avatar" decoding="async">
                             <div class="avatar-fallback" id="avatar-fallback" aria-hidden="true">AT</div>
                             <div class="avatar-pending" id="avatar-pending">
                                 <span class="dot"></span>
-                                <span id="avatar-status">getting current discord avatar...</span>
+                                <span id="avatar-status">getting my current discord avatar...</span>
                             </div>
                         </div>
                     </div>
@@ -3417,14 +3391,14 @@
                         <div class="section-kicker">the profile, but less boring</div>
                         <h2 class="section-title">uhh, hi.</h2>
                         <p class="section-lede">
-                            this is the part where i explain what i'm doing here without turning it into a résumé.
+                            this is the part where i explain what i'm doing here without turning myself into a résumé.
                         </p>
                     </div>
                 </div>
 
                 <div class="about-layout">
                     <article class="paper about-main reveal">
-                        <div class="paper-tag">from the original site</div>
+                        <div class="paper-tag">a little bit about me</div>
                         <h3>i'm aqua.</h3>
                         <p>
                             at 14, i balance the world of <strong>full-stack development</strong> with an unyielding love for anime.
@@ -3439,11 +3413,11 @@
                     <aside class="about-side reveal">
                         <div class="profile-row">
                             <div class="large-avatar-wrap">
-                                <img id="aqua-avatar-side" src="" alt="Aqua Tsukimura Discord avatar" decoding="async">
+                                <img id="aqua-avatar-side" src="" alt="My Discord avatar" decoding="async">
                             </div>
                             <div class="profile-meta">
                                 <h3>Aqua Tsukimura</h3>
-                                <p>personal website / code / anime / assorted thoughts</p>
+                                <p>my website / code / anime / assorted thoughts</p>
                             </div>
                         </div>
 
@@ -3461,7 +3435,7 @@
                                 <span class="value">Lua / C++ / Python / C# / C</span>
                             </li>
                             <li>
-                                <span class="key">vibe</span>
+                                <span class="key">current vibe</span>
                                 <span class="value">dark navy, moonlight, flowers</span>
                             </li>
                         </ul>
@@ -3527,10 +3501,10 @@
                 <div class="section-heading reveal">
                     <div class="section-number">03 / interests</div>
                     <div class="section-title-wrap">
-                        <div class="section-kicker">a small map of the brain</div>
+                        <div class="section-kicker">a small map of my brain</div>
                         <h2 class="section-title">stuff i like.</h2>
                         <p class="section-lede">
-                            the original site is pretty simple about this, so i'm keeping it honest instead of inventing a giant personality database.
+                            i'm keeping this part honest instead of inventing a giant personality database for myself.
                         </p>
                     </div>
                 </div>
@@ -3540,7 +3514,7 @@
                         <h3>the short version</h3>
                         <p>
                             i like <strong>anime</strong>. i like <strong>full-stack development</strong>.
-                            i like making digital experiences. that's the real information the original page gives us,
+                            i like making digital experiences. that's the real information i've shared so far,
                             and honestly, that's enough to start with.
                         </p>
                         <div class="scribble">small list, big brain noise.</div>
@@ -3583,7 +3557,7 @@
                         <div class="section-kicker">these are the actual languages</div>
                         <h2 class="section-title">code drawer.</h2>
                         <p class="section-lede">
-                            no fake percentages. no “87% proficient” nonsense. just the five languages Aqua actually lists.
+                            no fake percentages. no “87% proficient” nonsense. just the five languages i actually list.
                         </p>
                     </div>
                 </div>
@@ -3655,7 +3629,7 @@ int main(void) {
                 </div>
 
                 <div class="tools-strip reveal">
-                    <strong>other tech mentioned on the original page:</strong>
+                    <strong>other tech i had on the original page:</strong>
                     Azure · Cloudflare · Kafka · Kubernetes · Redis · VSCode
                 </div>
             </div>
@@ -3667,10 +3641,10 @@ int main(void) {
                 <div class="section-heading reveal">
                     <div class="section-number">05 / stuff</div>
                     <div class="section-title-wrap">
-                        <div class="section-kicker">projects / made-up projects are banned here</div>
+                        <div class="section-kicker">projects / i'm not making things up</div>
                         <h2 class="section-title">things i've made.</h2>
                         <p class="section-lede">
-                            the original page doesn't actually name any projects, so i'm not going to hallucinate a startup empire for Aqua.
+                            i didn't actually name any projects on the original page, so i'm not going to magically invent a startup empire for myself.
                         </p>
                     </div>
                 </div>
@@ -3679,31 +3653,31 @@ int main(void) {
                     <article class="project-letter reveal">
                         <h3>the shelf is a little empty.</h3>
                         <p>
-                            that's not a design mistake. it's me refusing to turn unnamed work into fake portfolio entries.
-                            the useful information we do have is that Aqua builds digital experiences and works across the stack.
+                            that's not a design mistake. i'm refusing to turn unnamed work into fake portfolio entries.
+                            the useful information i do have is that i build digital experiences and work across the stack.
                         </p>
                         <p>
-                            when the real project names, links, screenshots, or writeups exist, this is the part of the site where they belong.
+                            when i add real project names, links, screenshots, or writeups, this is exactly where i'll put them.
                         </p>
-                        <span class="stamp">honest placeholder / not a fake project</span>
+                        <span class="stamp">honest placeholder / i'm not making one up</span>
                     </article>
 
                     <div class="project-shelves">
                         <article class="project-slot reveal">
                             <div class="index">A</div>
                             <div>
-                                <h4>unnamed project slot</h4>
-                                <p>reserved for a real Aqua project. no invented details, no fake metrics.</p>
-                                <span class="quiet">source page lists no named project</span>
+                                <h4>project slot</h4>
+                                <p>reserved for one of my real projects. no invented details, no fake metrics.</p>
+                                <span class="quiet">waiting for actual project info</span>
                             </div>
                         </article>
 
                         <article class="project-slot reveal">
                             <div class="index">B</div>
                             <div>
-                                <h4>another unnamed slot</h4>
+                                <h4>another project slot</h4>
                                 <p>same deal. future-proof, visually present, factually quiet.</p>
-                                <span class="quiet">source page lists no named project</span>
+                                <span class="quiet">waiting for actual project info</span>
                             </div>
                         </article>
                     </div>
@@ -3730,7 +3704,7 @@ int main(void) {
                         <h3>maker brain</h3>
                         <p>
                             sometimes the fun part isn't the technology at all. it's noticing that an idea has a shape,
-                            then trying to make the browser agree with you.
+                            then trying to make the browser agree with me.
                         </p>
                         <div class="scribble">make the screen feel less screen-ish.</div>
                     </article>
@@ -3754,7 +3728,7 @@ int main(void) {
                     <span>this is where the obsession lives.</span>
                 </h2>
                 <p>
-                    Aqua's site comes first. then we get to one of the biggest visual influences on this redesign:
+                    my site comes first. then we get to one of the biggest visual influences on this redesign:
                     <em>I Want to Love You Till Your Dying Day</em> — <strong>きみが死ぬまで恋をしたい</strong> —
                     also known as <strong>Kimi ga Shinu Made Koi wo Shitai</strong> or just <strong>KimiShinu</strong>.
                 </p>
@@ -3866,14 +3840,14 @@ int main(void) {
                         <div class="topline">the important part</div>
                         <h3>ALI <span>+</span> LIZZY</h3>
                         <p>
-                            there is something especially striking about the way their dynamic lives inside a story built around war,
-                            sacrifice, and the question of what it means to keep choosing someone.
-                            Ali's steadiness sits beside Seiran's sharper edges, and even the quieter moments carry weight.
+                            honestly, i just love how cute they are together.
+                            i like the softer moments, the contrast between them, and the way their dynamic gets extra emotional
+                            because of the world they live in. that's basically the scientific explanation.
                         </p>
                         <div class="pair-meta">
                             <div class="box">
-                                <div class="label">energy</div>
-                                <div class="value">soft light + sharp edges</div>
+                                <div class="label">why i like them</div>
+                                <div class="value">because they are cute together!!</div>
                             </div>
                             <div class="box">
                                 <div class="label">visual mood</div>
@@ -3892,13 +3866,12 @@ int main(void) {
 
                 <div class="perspective">
                     <article class="perspective-note reveal">
-                        <div class="tiny">aqua's commentary box</div>
-                        <h3>what i like about them</h3>
+                        <div class="tiny">my commentary box</div>
+                        <h3>why i like them</h3>
                         <p>
-                            this spot is intentionally personal rather than pretending i know Aqua's thoughts.
-                            the original site doesn't include a detailed Ali × Lizzy essay, so the field below is clearly marked for Aqua's own words.
+                            uhh idk i just love them because they are cute together!!
                         </p>
-                        <div class="editable-line">[ aqua's own thoughts go here ]</div>
+                        <div class="editable-line">cute together!! that's it. that's the thought.</div>
                     </article>
 
                     <div class="relationship-notes">
@@ -3911,8 +3884,8 @@ int main(void) {
                             <p>Lizzy's strong sense of justice is part of what makes her awkward and caring.</p>
                         </article>
                         <article class="note-card reveal">
-                            <div class="label">tiny observation</div>
-                            <p>the quieter the room gets, the more emotionally loud KimiShinu becomes.</p>
+                            <div class="label">my extremely scientific conclusion</div>
+                            <p>they are cute together!!</p>
                         </article>
                     </div>
                 </div>
@@ -3967,7 +3940,7 @@ int main(void) {
                         <div class="section-kicker">open the pictures, make the site bigger</div>
                         <h2 class="section-title">paper / sky / girls / stars.</h2>
                         <p class="section-lede">
-                            actual KimiShinu imagery, used as the visual counterweight to Aqua's darker personal site.
+                            actual KimiShinu imagery, used as the visual counterweight to my darker personal site.
                             click anything to open it larger.
                         </p>
                     </div>
@@ -4015,7 +3988,7 @@ int main(void) {
                         <h2>sources & credits.</h2>
                         <p>
                             the KimiShinu facts and character details were checked against official or publisher material where possible.
-                            image URLs are centralized below so the visual set can be changed from one place.
+                            image URLs are centralized below so i can change the visual set from one place.
                         </p>
                         <div class="source-links">
                             <a href="https://kimishinu-anime.com/" target="_blank" rel="noopener noreferrer">official anime site</a>
@@ -4039,7 +4012,7 @@ int main(void) {
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Aqua Avatar</td>
+                                        <td>My Avatar</td>
                                         <td>aquaAvatar</td>
                                         <td>dynamic Discord lookup</td>
                                     </tr>
@@ -4118,7 +4091,7 @@ int main(void) {
                 <div>
                     <div class="footer-name">Aqua Tsukimura</div>
                     <p class="footer-copy">
-                        made for one person, a few ideas, and an unreasonable amount of moonlight.
+                        made by me for my little corner of the internet, a few ideas, and an unreasonable amount of moonlight.
                         KimiShinu artwork and characters belong to their respective creators and rights holders.
                     </p>
                 </div>
@@ -4254,19 +4227,26 @@ int main(void) {
                         data?.avatarUrl ||
                         data?.user?.avatar_url ||
                         data?.user?.avatarUrl ||
-                        data?.avatar ||
                         null;
 
                     if (avatarUrl) {
                         return avatarUrl;
                     }
 
-                    const avatarHash = data?.user?.avatar || data?.avatar || null;
-                    const userId = data?.user?.id || data?.id || discord.userId;
+                    const avatarHash =
+                        data?.user?.avatar ||
+                        data?.avatar ||
+                        null;
+
+                    const userId =
+                        data?.user?.id ||
+                        data?.id ||
+                        discord.userId;
 
                     if (avatarHash) {
                         const format = String(avatarHash).startsWith("a_") ? "gif" : "webp";
-                        return `https://cdn.discordapp.com/avatars/${userId}/${avatarHash}.${format}?size=${discord.size}&animated=true&t=${Date.now()}`;
+
+                        return `https://cdn.discordapp.com/avatars/${userId}/${avatarHash}.${format}?size=${discord.size}`;
                     }
                 } catch (error) {
                     continue;
@@ -4394,7 +4374,10 @@ int main(void) {
                 lightbox.classList.remove("open");
                 document.body.classList.remove("lightbox-open");
                 lightboxImage.src = "";
-                if (lastFocused) lastFocused.focus();
+
+                if (lastFocused) {
+                    lastFocused.focus();
+                }
             }
 
             document.querySelectorAll(".gallery-item").forEach(item => {
@@ -4404,7 +4387,9 @@ int main(void) {
             close.addEventListener("click", dismiss);
 
             lightbox.addEventListener("click", event => {
-                if (event.target === lightbox) dismiss();
+                if (event.target === lightbox) {
+                    dismiss();
+                }
             });
 
             document.addEventListener("keydown", event => {
@@ -4428,10 +4413,13 @@ int main(void) {
             function resize() {
                 width = window.innerWidth;
                 height = window.innerHeight;
+
                 canvas.width = Math.floor(width * dpr);
                 canvas.height = Math.floor(height * dpr);
+
                 canvas.style.width = `${width}px`;
                 canvas.style.height = `${height}px`;
+
                 ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
             }
 
@@ -4465,12 +4453,14 @@ int main(void) {
                 petals.length = 0;
 
                 const starCount = Math.min(170, Math.floor(width / 7));
+
                 for (let i = 0; i < starCount; i++) {
                     stars.push(createStar());
                 }
 
                 if (!reduced) {
                     const petalCount = Math.min(26, Math.floor(width / 58));
+
                     for (let i = 0; i < petalCount; i++) {
                         petals.push(createPetal());
                     }
@@ -4478,7 +4468,10 @@ int main(void) {
             }
 
             function drawStar(star, tick) {
-                const pulse = reduced ? 1 : (Math.sin(tick * star.speed + star.phase) + 1) / 2;
+                const pulse = reduced
+                    ? 1
+                    : (Math.sin(tick * star.speed + star.phase) + 1) / 2;
+
                 const alpha = star.a * (0.55 + pulse * 0.6);
                 const x = star.x + Math.sin(tick * 0.0004 + star.phase) * star.drift;
 
@@ -4503,12 +4496,25 @@ int main(void) {
                 ctx.save();
                 ctx.translate(petal.x, petal.y);
                 ctx.rotate(petal.rot);
+
                 ctx.beginPath();
                 ctx.moveTo(0, 0);
-                ctx.quadraticCurveTo(petal.r * 1.4, -petal.r * 0.55, petal.r * 2.1, 0);
-                ctx.quadraticCurveTo(petal.r * 1.2, petal.r * 0.9, 0, 0);
+                ctx.quadraticCurveTo(
+                    petal.r * 1.4,
+                    -petal.r * 0.55,
+                    petal.r * 2.1,
+                    0
+                );
+                ctx.quadraticCurveTo(
+                    petal.r * 1.2,
+                    petal.r * 0.9,
+                    0,
+                    0
+                );
+
                 ctx.fillStyle = `rgba(239,159,200,${petal.alpha})`;
                 ctx.fill();
+
                 ctx.restore();
             }
 
@@ -4522,6 +4528,7 @@ int main(void) {
                 if (!reduced) {
                     for (let i = 0; i < petals.length; i++) {
                         const petal = petals[i];
+
                         petal.x += petal.vx;
                         petal.y += petal.vy;
                         petal.rot += petal.spin;
@@ -4531,8 +4538,13 @@ int main(void) {
                             petal.x = Math.random() * width;
                         }
 
-                        if (petal.x < -20) petal.x = width + 20;
-                        if (petal.x > width + 20) petal.x = -20;
+                        if (petal.x < -20) {
+                            petal.x = width + 20;
+                        }
+
+                        if (petal.x > width + 20) {
+                            petal.x = -20;
+                        }
 
                         drawPetal(petal);
                     }
@@ -4545,6 +4557,7 @@ int main(void) {
 
             resize();
             seed();
+
             window.addEventListener("resize", () => {
                 resize();
                 seed();
@@ -4566,6 +4579,7 @@ int main(void) {
                     if (!target) return;
 
                     event.preventDefault();
+
                     target.scrollIntoView({
                         behavior: reduceMotion ? "auto" : "smooth",
                         block: "start"
