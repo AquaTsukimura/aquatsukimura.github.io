@@ -3393,6 +3393,81 @@
         @media (prefers-reduced-motion: reduce) {
             .reveal.is-visible { animation: none; }
         }
+    
+        /* Soft corners and low-cost interaction polish. */
+        .site-header,
+        .button,
+        .hero-image-frame,
+        .avatar-pending,
+        .about-main,
+        .about-side,
+        .interest-note,
+        .interest-map,
+        .nyx-card,
+        .nyx-side,
+        .language-card,
+        .project-letter,
+        .project-slot,
+        .beyond-card,
+        .anime-feature,
+        .character-card,
+        .pair-spread,
+        .note-card,
+        .quote-card,
+        .gallery-item,
+        .image-reference-wrap,
+        .lightbox-dialog,
+        .paper-tag,
+        .interest-chip,
+        .fact {
+            border-radius: 14px;
+        }
+
+        .hero-image-frame { border-radius: 18px; }
+        .gallery-item img,
+        .hero-image,
+        .anime-feature img,
+        .character-image-wrap img,
+        .pair-spread img { border-radius: inherit; }
+
+        .button,
+        .interest-chip { border-radius: 999px; }
+
+        .hero-image-frame,
+        .anime-feature,
+        .character-card,
+        .pair-spread,
+        .gallery-item,
+        .language-card,
+        .thing,
+        .note-card,
+        .project-slot,
+        .beyond-card,
+        .about-main,
+        .about-side,
+        .nyx-card,
+        .nyx-side {
+            box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+        }
+
+        .button:active,
+        .interest-chip:active {
+            transform: scale(0.97);
+        }
+
+        @media (max-width: 640px) {
+            /* Content stays readable if scroll-reveal JavaScript is delayed or unavailable. */
+            .reveal,
+            .reveal.is-visible {
+                opacity: 1;
+                transform: none;
+                animation: none;
+            }
+
+            .shell { width: calc(100% - 28px); }
+            .site-header { width: calc(100% - 20px); }
+            .hero-image-frame { border-radius: 16px; }
+        }
     </style>
 </head>
 
@@ -6059,4 +6134,5 @@ int main(void) {
     </script>
 </body>
 </html>
+
 
